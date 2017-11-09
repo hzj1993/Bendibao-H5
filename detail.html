@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图文详情</title>
+  <meta id=viewport name=viewport
+        content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+  <link rel="stylesheet" href="assets/css/swiper.min.css">
+</head>
+<body>
+
+<section class="container-detail">
+
+  <!--浮动定位头部-->
+  <!-- Swiper -->
+  <!--TODO 推荐的文章-->
+  <div class="swiper-container section-top-bar">
+    <div class="swiper-wrapper">
+
+      <!--轮播文章推荐 1-->
+      <div class="swiper-slide">
+        <div class="article-thumbnail" style="background:#ffb400;"></div>
+        <div class="article-title">
+          文章标题文章标题文章标题文章标题文章标题文章标题
+          文章标题文章标题文章标题文章标题文章标题文章标题
+        </div>
+        <div class="btn-open">打开</div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <!-------END------->
+
+  <!--正文部分-->
+  <section class="section-main" id="content">
+    <section class="section-content">
+      <section class="section-richtext">
+        <h1 class="title-main" id="title"></h1>
+        <div class="sub-text">
+          <span class="date" id="formatTime"></span>
+          <span class="author" id="author"></span>
+        </div>
+        <div class="content-main" id="richText"></div>
+      </section>
+
+      <div class="btn-plain">阅读全文</div>
+    </section>
+
+    <section class="section-advert">
+      <ul class="ad-container">
+        <li class="ad-item">
+          <h2 class="ad-title">我的天！ipad以旧换新都不到500，苏宁这次下血本了</h2>
+          <div class="btn-close"></div>
+          <ul class="ad-image-list">
+            <li class="ad-image-item"></li>
+            <li class="ad-image-item"></li>
+            <li class="ad-image-item"></li>
+            <li class="ad-image-item"></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+  </section>
+  <!--end-->
+
+</section>
+
+</body>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  var mySwiper = new Swiper('.swiper-container', {
+    preventClicks: false,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+    },
+  });
+
+  $(document).ready(function () {
+
+    // 判断是否移动端打开。如果在pc端打开，添加额外样式模拟移动端
+    if (!isMobile()) {
+      var container = document.getElementsByClassName('container-detail')[0];
+      var html = document.getElementsByTagName('html')[0];
+      container.className = 'container-detail container-main';
+      html.className = 'fix-font-size';
+    }
+
+    // 12324
+    getRichText(12324);
+
+    $(".btn-open").click(function () {
+      console.log(321321);
+    });
+
+    $(".btn-plain").click(function () {
+      var content = $(".section-richtext");
+      content.removeClass('mask');
+      content.css({ "maxHeight": "none" });
+      $(this).hide();
+    });
+
+    topBarPerform();
+  });
+
+  function formatPage() {
+    // 判断富文本内容是否超出1.5屏的高度，超出则折叠
+    var content = $(".section-richtext");
+    if (content.height() > parseInt($(window).height()) * 1.5) {
+      content.css({
+        "maxHeight": parseInt($(window).height()) * 1.5 + "px",
+        "overflow": "hidden"
+      });
+      content.addClass('mask');
+      $(".btn-plain").show();
+    }
+  }
+
+  /**
+   * 获取文章内容
+   * id：文章id
+   */
+  function getRichText(id) {
+    $.ajax({
+      type: 'POST',
+      url: 'http://111.230.168.109:8081/news/news/get-news',
+      data: { 'id': id },
+      dataType: 'json',
+      success: function (resp) {
+        var author = resp.data.author.name;
+        var formatTime = resp.data.formated_time;
+        var title = resp.data.title;
+        var richTextHtml = '';
+        for (var i = 0;i < resp.data.main_body.length;i++) {
+          if (resp.data.main_body[i].type === 'text') {
+            richTextHtml += '<p>' + resp.data.main_body[i].content + '</p>';
+          } else if (resp.data.main_body[i].type === 'img') {
+            richTextHtml += '<img src="' + resp.data.main_body[i].content + '"/>';
+          }
+        }
+        $('#title').text(title);
+        $('#formatTime').text(formatTime);
+        if (author) $('#author').text(author);
+        $('#richText').html(richTextHtml);
+        formatPage();
+      },
+      error: function (e) {
+//        console.log(e);
+      }
+    });
+  }
+
+  /**
+   * 向上向下滚动时 topbar 的表现
+   */
+  function topBarPerform() {
+    var content = $("#content");
+    var topBar = $(".section-top-bar");
+    var currentScrollTop = content.scrollTop();
+    content.scroll(function () {
+      if (content.scrollTop() > currentScrollTop) {
+        // 向下滚动隐藏
+        currentScrollTop = content.scrollTop();
+        topBar.css({
+          "transform": "translate3d(0,-100%,0)",
+          "-webkit-transform": "translate3d(0,-100%,0)"
+        });
+      } else {
+        // 向上滚动显示
+        currentScrollTop = content.scrollTop();
+        topBar.css({
+          "transform": "translate3d(0,0,0)",
+          "-webkit-transform": "translate3d(0,0,0)"
+        });
+      }
+    });
+  }
+</script>
+</html>

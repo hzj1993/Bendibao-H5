@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>下载页</title>
+  <meta id=viewport name=viewport
+        content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+
+</head>
+<body>
+<section class="container-download">
+  <!--<img src="assets/images/bg_download.png" alt="bg">-->
+  <div class="btn-download"></div>
+</section>
+</body>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if (!isMobile()) {
+      var container = document.getElementsByClassName('container-download')[0];
+      var html = document.getElementsByTagName('html')[0];
+      container.className = 'container-download container-main';
+      html.className = 'fix-font-size';
+    }
+
+    $(".btn-download").click(function () {
+      // TODO 跳转到AppStore
+      console.log('跳转到 AppStore');
+    });
+  });
+</script>
+</html>

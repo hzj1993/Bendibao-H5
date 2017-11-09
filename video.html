@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>视频分享</title>
+  <meta id=viewport name=viewport
+        content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+  <link rel="stylesheet" href="assets/css/swiper.min.css">
+</head>
+<body>
+
+<section class="container-detail">
+
+  <!--浮动定位头部-->
+  <!-- Swiper -->
+  <!--TODO 推荐的文章-->
+  <div class="swiper-container section-top-bar">
+    <div class="swiper-wrapper">
+
+      <!--轮播文章推荐 1-->
+      <div class="swiper-slide">
+        <div class="article-thumbnail" style="background:#ffb400;"></div>
+        <div class="article-title">
+          文章标题文章标题文章标题文章标题文章标题文章标题
+          文章标题文章标题文章标题文章标题文章标题文章标题
+        </div>
+        <div class="btn-open">打开</div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <!-------END------->
+
+  <!--正文部分-->
+  <section class="section-main" id="content">
+
+
+  </section>
+  <!--end-->
+
+</section>
+
+</body>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  var mySwiper = new Swiper('.swiper-container', {
+    preventClicks: false,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+    },
+  });
+
+  $(document).ready(function () {
+
+    // 判断是否移动端打开。如果在pc端打开，添加额外样式模拟移动端
+    if (!isMobile()) {
+      var container = document.getElementsByClassName('container-detail')[0];
+      var html = document.getElementsByTagName('html')[0];
+      container.className = 'container-detail container-main';
+      html.className = 'fix-font-size';
+    }
+
+
+    $(".btn-open").click(function () {
+      console.log(321321);
+    });
+
+    topBarPerform();
+  });
+
+  /**
+   * 向上向下滚动时 topbar 的表现
+   */
+  function topBarPerform() {
+    var content = $("#content");
+    var topBar = $(".section-top-bar");
+    var currentScrollTop = content.scrollTop();
+    content.scroll(function () {
+      if (content.scrollTop() > currentScrollTop) {
+        // 向下滚动隐藏
+        currentScrollTop = content.scrollTop();
+        topBar.css({
+          "transform": "translate3d(0,-100%,0)",
+          "-webkit-transform": "translate3d(0,-100%,0)"
+        });
+      } else {
+        // 向上滚动显示
+        currentScrollTop = content.scrollTop();
+        topBar.css({
+          "transform": "translate3d(0,0,0)",
+          "-webkit-transform": "translate3d(0,0,0)"
+        });
+      }
+    });
+  }
+</script>
+</html>

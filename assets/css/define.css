@@ -1,0 +1,53 @@
+html {
+  font-size: 5vw !important;
+}
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.red {
+  color: #ff3c1c;
+}
+.container-main {
+  width: 375px !important;
+  height: 667px !important;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.container-main * {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.container-main::-webkit-scrollbar {
+  display: none;
+}
+.fix-font-size {
+  font-size: 18.75px !important;
+}
+/* Flex
+  =========================================
+ */
+/* transform
+  =========================================
+ */
+.mask {
+  position: relative;
+  -webkit-transition: max-height 0.32s cubic-bezier(0.95, 0.05, 0.795, 0.035), -webkit-mask-size 0.22s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  transition: max-height 0.32s cubic-bezier(0.95, 0.05, 0.795, 0.035), -webkit-mask-size 0.22s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  transition: mask-size 0.22s cubic-bezier(0.95, 0.05, 0.795, 0.035), max-height 0.32s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  transition: mask-size 0.22s cubic-bezier(0.95, 0.05, 0.795, 0.035), max-height 0.32s cubic-bezier(0.95, 0.05, 0.795, 0.035), -webkit-mask-size 0.22s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(#000), to(transparent));
+  -webkit-mask-image: linear-gradient(#000 calc(92%), transparent calc(97.2%));
+  mask-image: -webkit-gradient(linear, left top, left bottom, from(#000), to(transparent));
+  mask-image: linear-gradient(#000 calc(92%), transparent calc(97.2%));
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>晒收入</title>
+  <meta id=viewport name=viewport
+        content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+</head>
+<body>
+<section class="container-share">
+  <div class="nickname-box">
+    <span class="nickname">用户昵称某某某</span>
+    赚了
+  </div>
+  <div class="price red">5.88元</div>
+  <div class="tips">
+    长按识别二维码<span class="red">领红包</span>
+  </div>
+  <img src="http://qr.topscan.com/api.php?text=http://bendibao.local.puahzj.com/red-packge.html" alt="" class="qrcode">
+  <div class="bottom-tips">
+    注册登录后输入邀请码
+    <span class="red">
+      000888 领红包
+    </span>
+  </div>
+</section>
+</body>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if (!isMobile()) {
+      var container = document.getElementsByClassName('container-share')[0];
+      var html = document.getElementsByTagName('html')[0];
+      container.className = 'container-share container-main';
+      html.className = 'fix-font-size';
+    }
+
+    $(".btn-download").click(function () {
+      // TODO 跳转到下载页
+      console.log('跳转到下载页');
+    });
+  });
+</script>
+</html>

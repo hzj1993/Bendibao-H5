@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>产品下载分享</title>
+  <meta id=viewport name=viewport
+        content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+</head>
+
+<body>
+<section class="container-red">
+  <!--领取现金红包按钮-->
+  <div class="btn-get"></div>
+  <!--------end-------->
+
+  <!--提现用户列表-->
+  <ul class="detail-lists">
+    <li class="list-item">
+      <div class="nickname">用户的昵称</div>
+      <div class="bot-box">
+        <div class="date">2017-11-02 10:01:56</div>
+        <div class="text">
+          提现了<span class="red">30元</span>到微信红包
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!--------end-------->
+
+  <!--弹出框-->
+  <div class="block-alert">
+    <div class="block-alert-body">
+      <div class="row-mobile">
+        <div class="btn-send-vcode">发送验证码</div>
+        <div class="count-down">倒计时<span class="second"></span>秒</div>
+        <input type="number" oninput="if(value.length>11)value=value.slice(0,11)" placeholder="手机号" id="mobile">
+        <label class="border"></label>
+      </div>
+      <div class="row-vcode">
+        <input type="text" placeholder="请输入验证码">
+      </div>
+      <div class="btn-submit">领取现金红包码</div>
+      <div class="btn-login-wechat">微信登录获取</div>
+    </div>
+  </div>
+  <!--------end-------->
+
+</section>
+</body>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  $(document).ready(function () {
+    if (!isMobile()) {
+      var container = document.getElementsByClassName('container-red')[0];
+      var html = document.getElementsByTagName('html')[0];
+      container.className = 'container-red container-main';
+      html.className = 'fix-font-size';
+    }
+
+    $(".btn-send-vcode").click(function () {
+      var mobile = $('#mobile').val();
+      console.log(mobile);
+      if (!checkPhone(mobile)) {
+        alert('请输入正确的手机号码！');
+        return;
+      }
+      // TODO 发送验证码接口
+//      $.ajax({
+//        url: 'https://111.230.168.109:8081/msg/sms/send-secret-code',
+//        data: {
+//          'phone': mobile,
+//          'scene': 1
+//        },
+//        type: 'POST',
+//        dataType: 'json',
+//        success: function (resp) {
+//          console.log(resp);
+//        },
+//        error: function (err) {
+//
+//        }
+//      });
+      $(this).hide();
+      $(".count-down").show();
+      var seconds = 60;
+      $(".second").text(seconds);
+      var interval = setInterval(() => {
+        seconds--;
+        if (seconds >= 0) {
+          $(".second").text(seconds);
+        } else {
+          clearInterval(interval);
+          $(this).show();
+          $(".count-down").hide();
+        }
+      }, 1000);
+    });
+
+    $('.btn-submit').click(function () {
+      // TODO 判断是否安装App，有安装跳转到app注册并领取红包码
+      console.log('领取红包码');
+    });
+
+    $('.btn-login-wechat').click(function () {
+      // TODO 微信登录后判断安装App，有安装跳转到app注册并领取红包码
+    });
+
+  });
+</script>
+</html>
